@@ -6,7 +6,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from "next/cache";
 import { ApplicationStatus } from "@prisma/client";
 
-export async function addApplication(formData: FormData) {
+export async function addApplication(formData: FormData, userId: string)  {
   try {
     const session = await getServerSession(authOptions);
     
