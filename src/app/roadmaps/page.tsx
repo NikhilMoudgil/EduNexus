@@ -78,24 +78,17 @@ export default async function RoadmapsListingPage() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header Section */}
-        <div className="mb-16 text-left">
+        <div className="mb-10 text-left">
           <h1 className="text-5xl font-black text-white tracking-tight leading-tight">Roadmaps</h1>
           <p className="mt-4 text-lg text-gray-400 max-w-2xl font-light leading-relaxed">
             Step-by-step learning paths. Explore our library of 100+ domains or view your custom AI generations.
           </p>
         </div>
 
-        {/* SEARCH & LISTING UI */}
-        <RoadmapSearch 
-          officialRoadmaps={allOfficialRoadmaps} 
-          userRoadmaps={userRoadmaps} 
-          isLoggedIn={!!session} 
-        />
-
-        {/* BOTTOM AI CTA */}
-        <div className="mt-20 bg-white/5 border border-white/10 rounded-3xl p-10 backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {/* MOVED: AI CTA SECTION (Now at the top) */}
+        <div className="mb-12 bg-white/5 border border-white/10 rounded-3xl p-10 backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <h3 className="text-3xl font-extrabold text-white mb-2 tracking-tight">Didn't find what you need?</h3>
+            <h3 className="text-2xl font-extrabold text-white mb-2 tracking-tight">Didn't find what you need?</h3>
             <p className="text-gray-400 leading-relaxed font-light">
               Build your customized roadmap with our powerful AI generator.
             </p>
@@ -106,6 +99,13 @@ export default async function RoadmapsListingPage() {
             </button>
           </Link>
         </div>
+
+        {/* SEARCH & LISTING UI */}
+        <RoadmapSearch 
+          officialRoadmaps={allOfficialRoadmaps} 
+          userRoadmaps={userRoadmaps} 
+          isLoggedIn={!!session} 
+        />
 
       </div>
     </div>
