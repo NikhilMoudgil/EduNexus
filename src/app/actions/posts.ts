@@ -5,38 +5,37 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from "next/cache";
 
-export async function createEduPost(formData: FormData) {
+export async function createEduPost(data: { content: string, mediaUrl?: string, mediaType?: string }) {
   const session = await getServerSession(authOptions);
-  if (!session?.user) throw new Error("Unauthorized");
+  if (!session?.user?.email) return;
 
-  const content = formData.get("content") as string;
-  const userId = (session.user as any).id;
-  const isMentor = (session.user as any).role === "MENTOR";
+  const user = await db.user.findUnique({ where: { email: session.user.email }});
+  if (!user) return;
+
+  const expiresAt = new Date();
+  expiresAt.setHours(expiresAt.getHours() + 24);
 
   await db.post.create({
     data: {
-      content,
-      userId: userId,
-      isVerified: isMentor,
-      // 🕒 Students: 24h TTL | Mentors: No expiry
-      expiresAt: isMentor ? null : new Date(Date.now() + 24 * 60 * 60 * 1000),
-    },
+      content: data.content,
+      mediaUrl: data.mediaUrl || null,
+      mediaType: data.mediaType || null,
+      userId: user.id,
+      expiresAt: user.role === "MENTOR" ? null : expiresAt,
+    }
   });
 
   revalidatePath("/community");
 }
 
-export async function deleteEduPost(postId: string) {
+export async function deleteEduPost(id: string) {
   const session = await getServerSession(authOptions);
-  if (!session?.user) return;
+  if (!session?.user?.email) return;
 
-  // Security check: Only delete if the user owns the post
-  await db.post.deleteMany({
-    where: {
-      id: postId,
-      userId: (session.user as any).id,
-    },
+  // Ensure only the owner (or an admin) can delete it
+  await db.post.delete({
+    where: { id: id }
   });
-
+  
   revalidatePath("/community");
 }

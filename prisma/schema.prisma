@@ -77,6 +77,11 @@ model VerificationToken {
 model Post {
   id          String    @id @default(cuid())
   content     String    @db.Text
+  
+  // 🖼️ NEW: Media Support for Supabase Storage
+  mediaUrl    String?   @db.Text
+  mediaType   String?   // Expected: 'image' or 'video'
+
   userId      String
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   

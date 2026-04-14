@@ -3,7 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { createEduPost, deleteEduPost } from "@/app/actions/posts";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-import { ShieldCheck, Zap, Trash2, Heart, MessageSquare } from "lucide-react";
+import { ShieldCheck, Trash2, Heart, MessageSquare } from "lucide-react";
+import MediaPostBox from "@/components/community/MediaPostBox";
 
 export default async function CommunityPage() {
   const session = await getServerSession(authOptions);
@@ -18,39 +19,26 @@ export default async function CommunityPage() {
   });
 
   return (
-    // 🛡️ THE FIX: Added suppressHydrationWarning here
     <div suppressHydrationWarning className="min-h-screen bg-[#05050f] text-white pt-28 pb-12 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
         
-        {/* SIDEBAR: Mentors & Rules */}
         <aside className="hidden lg:block space-y-6">
           <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
             <h3 className="text-cyan-400 font-bold mb-4 flex items-center gap-2">
               <ShieldCheck size={18} /> Guidelines
             </h3>
             <p className="text-xs text-gray-500 leading-relaxed italic">
-              Student updates vanish after 24 hours. Mentor announcements are permanent expert tips.
+              Student updates and media vanish after 24 hours. Mentor announcements are permanent expert tips.
             </p>
           </div>
         </aside>
 
-        {/* FEED */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
-            <form action={createEduPost}>
-              <textarea 
-                name="content"
-                placeholder={`What's on your mind, ${session?.user?.name?.split(' ')[0] || 'Nikhil'}?`}
-                className="w-full bg-transparent border-none focus:ring-0 text-lg placeholder:text-gray-600 resize-none"
-                rows={3}
-              />
-              <div className="flex justify-end mt-4 pt-4 border-t border-white/5">
-                <button className="bg-cyan-500 hover:bg-cyan-400 text-black px-6 py-2 rounded-xl font-bold transition flex items-center gap-2 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-                  <Zap size={16} /> Post Story
-                </button>
-              </div>
-            </form>
-          </div>
+          
+          <MediaPostBox 
+            createPostAction={createEduPost} 
+            placeholder={`What's on your mind, ${session?.user?.name?.split(' ')[0] || 'Prishika'}?`} 
+          />
 
           <div className="space-y-6">
             {posts.map(post => (
@@ -71,14 +59,24 @@ export default async function CommunityPage() {
                     </div>
                   </div>
                   {(session?.user as any)?.id === post.userId && (
-                    <form action={async () => { "use server"; await deleteEduPost(post.id); }}>
-                      <button className="text-gray-600 hover:text-red-400 transition"><Trash2 size={16}/></button>
+                    <form action={deleteEduPost.bind(null, post.id)}>
+                      <button type="submit" className="text-gray-600 hover:text-red-400 transition"><Trash2 size={16}/></button>
                     </form>
                   )}
                 </div>
                 
-                {/* ✅ Rich Content Rendering */}
                 <MarkdownRenderer content={post.content} />
+
+                {post.mediaUrl && post.mediaType === 'image' && (
+                  <div className="mt-4 rounded-xl overflow-hidden border border-white/10">
+                    <img src={post.mediaUrl} alt="Post media" className="w-full object-cover max-h-[500px]" />
+                  </div>
+                )}
+                {post.mediaUrl && post.mediaType === 'video' && (
+                  <div className="mt-4 rounded-xl overflow-hidden border border-white/10 bg-black">
+                    <video src={post.mediaUrl} controls className="w-full max-h-[500px]" />
+                  </div>
+                )}
 
                 <div className="mt-6 pt-4 border-t border-white/5 flex gap-6 text-gray-500 text-xs font-bold">
                   <span className="flex items-center gap-2 hover:text-cyan-400 cursor-pointer transition">
