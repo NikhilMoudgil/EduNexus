@@ -1,28 +1,41 @@
 "use client";
 
 import { PlacementApplication } from "@prisma/client";
-import { FileText, Handshake, Trophy, DollarSign } from "lucide-react";
+import { FileText, Code, Clock, Trophy } from "lucide-react";
 
 export default function StatCards({ applications }: { applications: PlacementApplication[] }) {
   const total = applications.length;
-  const interviews = applications.filter((a) => a.status === "INTERVIEWING").length;
-  const offers = applications.filter((a) => a.status === "OFFERED").length;
   
-  const applicationsWithSalary = applications.filter((a) => a.salary && a.status === "OFFERED");
-  const avgSalary = applicationsWithSalary.length > 0
-    ? applicationsWithSalary.reduce((sum, app) => sum + (app.salary || 0), 0) / applicationsWithSalary.length
-    : 0;
+  // New Unstop-style metrics
+  const assessmentsPending = applications.filter((a) => a.status === "ASSESSMENT_PENDING").length;
+  const competitions = applications.filter((a) => a.type === "HACKATHON" || a.type === "CASE_COMPETITION").length;
+  const winsAndOffers = applications.filter((a) => a.status === "OFFERED").length;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <StatCard title="Total Applications" value={total} icon={<FileText className="text-blue-400" />} />
-      <StatCard title="Interviews" value={interviews} icon={<Handshake className="text-purple-400" />} />
-      <StatCard title="Offers" value={offers} icon={<Trophy className="text-green-400" />} />
       <StatCard 
-        title="Avg. Salary" 
-        value={`$${avgSalary.toLocaleString()}`} 
-        icon={<DollarSign className="text-yellow-400" />} 
-        subtext="For accepted offers"
+        title="Total Tracked" 
+        value={total} 
+        icon={<FileText className="text-blue-400" />} 
+        subtext="Jobs, Internships & Comps"
+      />
+      <StatCard 
+        title="Competitions" 
+        value={competitions} 
+        icon={<Code className="text-fuchsia-400" />} 
+        subtext="Hackathons & Case Studies"
+      />
+      <StatCard 
+        title="Pending Action" 
+        value={assessmentsPending} 
+        icon={<Clock className="text-yellow-400" />} 
+        subtext="Assessments to complete"
+      />
+      <StatCard 
+        title="Wins & Offers" 
+        value={winsAndOffers} 
+        icon={<Trophy className="text-green-400" />} 
+        subtext="Cleared everything!"
       />
     </div>
   );

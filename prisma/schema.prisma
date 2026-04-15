@@ -75,24 +75,28 @@ model VerificationToken {
 // ------------------------------------------------------
 
 model Post {
-  id          String    @id @default(cuid())
-  content     String    @db.Text
+  id           String    @id @default(cuid())
+  content      String    @db.Text
   
   // 🖼️ NEW: Media Support for Supabase Storage
-  mediaUrl    String?   @db.Text
-  mediaType   String?   // Expected: 'image' or 'video'
+  mediaUrl     String?   @db.Text
+  mediaType    String?   // Expected: 'image' or 'video'
 
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // 🔗 NEW: Added missing fields from your server action
+  externalLink String?   @db.Text
+  pollData     Json?
+
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  isVerified  Boolean   @default(false)
-  expiresAt   DateTime? // Null = Permanent (Mentor), Date = 24h (Student)
+  isVerified   Boolean   @default(false)
+  expiresAt    DateTime? // Null = Permanent (Mentor), Date = 24h (Student)
   
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   
-  comments    Comment[]
-  likes       Like[]
+  comments     Comment[]
+  likes        Like[]
 }
 
 model Comment {
@@ -116,6 +120,7 @@ model Like {
 }
 
 // ------------------------------------------------------
+// // ------------------------------------------------------
 // 3. TRACKER & ROADMAP MODELS
 // ------------------------------------------------------
 
@@ -129,23 +134,63 @@ model CombinedPlan {
   updatedAt DateTime @updatedAt
 }
 
-model PlacementApplication {
-  id          String            @id @default(cuid())
-  company     String
-  role        String
-  dateApplied DateTime          @default(now())
-  status      ApplicationStatus @default(SENT)
-  salary      Int?
-  notes       String?           @db.Text
-  userId      String
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+// 🚀 NEW: Types of opportunities Unstop/modern platforms track
+enum OpportunityType {
+  JOB
+  INTERNSHIP
+  HACKATHON
+  CASE_COMPETITION
+  OPEN_SOURCE
 }
 
+// 🚀 UPDATED: Expanded status pipeline
 enum ApplicationStatus {
-  SENT
+  BOOKMARKED
+  SENT             // Kept 'SENT' so your existing DB records don't break
+  ASSESSMENT_PENDING
   INTERVIEWING
   OFFERED
   REJECTED
+  GHOSTED
+}
+
+model PlacementApplication {
+  id            String            @id @default(cuid())
+  company       String
+  role          String
+  type          OpportunityType   @default(JOB)
+  status        ApplicationStatus @default(SENT)
+  salary        Int?
+  notes         String?           @db.Text
+  
+  // 🚀 NEW: Advanced Tracking Fields
+  link          String?           // URL to the posting/hackathon
+  deadline      DateTime?         // Important for case comps/hackathons
+  resumeLink    String?           // Which resume version was used
+  coverLetterId String?           // Which cover letter was used
+  tags          String[]          // e.g., ["React", "PostgreSQL", "Next.js"]
+
+  dateApplied   DateTime          @default(now())
+  userId        String
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  // 🚀 NEW: Relational data for multi-stage interviews
+  rounds        InterviewRound[]
+}
+
+// 🚀 NEW: Track individual interview stages (OA, Technical, HR)
+model InterviewRound {
+  id            String               @id @default(cuid())
+  applicationId String
+  application   PlacementApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  
+  title         String               // e.g., "Online Assessment (OA)", "System Design"
+  date          DateTime?
+  status        String               // e.g., "UPCOMING", "CLEARED", "FAILED"
+  feedback      String?              @db.Text
+  
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
 }

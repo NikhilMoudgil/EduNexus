@@ -37,7 +37,15 @@ export default function RootLayout({
           {/* 🛡️ Wrapped in a div with hydration suppression to block extension errors like bis_skin_checked */}
           <main suppressHydrationWarning>{children}</main>
 
-          {/* 🚀 Fixed Placement Tracker Button */}
+          {/* 🎮 NEW: Dev Arena Floating Button (Bottom Left) */}
+          <Link href="/arena" className="fixed bottom-8 left-8 z-50 group">
+            <div className="flex items-center justify-center gap-3 bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white px-6 py-4 rounded-full shadow-[0_0_20px_rgba(217,70,239,0.4)] hover:shadow-[0_0_40px_rgba(217,70,239,0.7)] hover:-translate-y-1 transition-all duration-300 border border-fuchsia-400/50">
+              <i className="fas fa-gamepad text-lg animate-pulse group-hover:animate-none"></i>
+              <span className="font-bold tracking-wide">Dev Arena</span>
+            </div>
+          </Link>
+
+          {/* 🚀 Fixed Placement Tracker Button (Bottom Right) */}
           <Link href="/tracker" className="fixed bottom-8 right-8 z-50 group">
             <div className="flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-4 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_40px_rgba(16,185,129,0.7)] hover:-translate-y-1 transition-all duration-300 border border-green-400/50">
               <i className="fas fa-briefcase text-lg animate-pulse group-hover:animate-none"></i>

@@ -26,7 +26,7 @@ export default function Navbar() {
             <Link href="/" className="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Start Here</Link>
             <Link href="/roadmaps" className="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Roadmaps</Link>
             <Link href="/community" className="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Community</Link>
-            <Link href="/aboutus" className="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">About Us</Link>
+            <Link href="/about" className="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">About Us</Link>
             
             {/* ✅ AI Tutor Link - Route corrected to /ai-tutor */}
             <Link href="/ai-tutor" className="text-sm font-medium flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors">
