@@ -1,36 +1,222 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EduNexus
 
-## Getting Started
+EduNexus is a comprehensive, full-stack educational web platform designed to provide structured learning paths, gamified skill assessments, job tracking, and community engagement for developers and tech enthusiasts.
 
-First, run the development server:
+---
+
+## 🚀 Tech Stack
+
+* **Framework:** [Next.js](https://nextjs.org/) (App Router) with React
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **Database:** Supabase
+* **ORM:** Prisma
+* **Authentication:** NextAuth.js
+* **Content Management:** Markdown-based content rendering
+
+---
+
+## ✨ Key Features
+
+### 🗺️ Interactive Roadmaps (`/roadmaps`)
+
+Extensive, Markdown-backed learning paths covering various domains, including:
+
+* Frontend Development
+* Backend Development
+* DevOps
+* Data Science
+* Cyber Security
+* Game Development
+* And more
+
+### 🎮 The Arena (`/arena`)
+
+Gamified technical challenges designed to test and sharpen technical skills.
+
+Modules include:
+
+* **Big O Blitz** — Algorithm efficiency
+* **Regex Rush** — Regular expressions
+* **SQL Sniper** — Database queries
+* **PR Ranger** — Code review and Git
+* **Port Panic** — Networking
+* **STAR Maestro** — Interview preparation
+
+### 🤖 AI Tutor (`/ai-tutor`)
+
+Integrated AI assistance for:
+
+* Personalized learning
+* Code explanations
+* Technical questions
+* Dynamic study support
+
+### 📊 Application Tracker (`/tracker`)
+
+A dedicated dashboard for tracking job and internship applications.
+
+Features include:
+
+* Application timelines
+* Status tracking
+* Status pie charts
+* Recent application logs
+* Application management dashboard
+
+### 👥 Community Hub (`/community`)
+
+A social space where users can:
+
+* Create posts
+* Share media
+* Interact with other learners
+* Participate in the developer community
+
+---
+
+## 📁 Project Structure
+
+```text
+EduNexus/
+├── prisma/                # Prisma schema and database configuration
+├── public/                # Static assets (SVGs, icons)
+├── src/
+│   ├── app/               # Next.js App Router (Pages, API routes, Layouts)
+│   │   ├── api/           # Backend endpoints
+│   │   │   ├── auth/
+│   │   │   ├── ai-tutor/
+│   │   │   ├── generate/
+│   │   │   └── signup/
+│   │   ├── arena/         # Gamified assessment pages
+│   │   ├── roadmaps/      # Roadmap viewer and dynamic routing
+│   │   └── tracker/       # Job application tracking dashboard
+│   ├── components/        # Reusable React components
+│   │   ├── UI/
+│   │   ├── Arena/
+│   │   ├── Tracker/
+│   │   └── Community/
+│   ├── content/           # Markdown files for official roadmaps
+│   └── lib/               # Utility functions and database client setup
+├── .env                   # Environment variables
+├── next.config.ts         # Next.js configuration
+├── tailwind.config.ts     # Tailwind CSS configuration
+└── package.json           # Project dependencies and scripts
+```
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the Repository
+
+Clone the repository and navigate into the project directory:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/EduNexus.git
+cd EduNexus
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Set Up Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Authentication
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
+
+# Database
+DATABASE_URL=your_database_url
+
+# AI API
+AI_API_KEY=your_ai_api_key
+```
+
+> **Note:** Replace the example values with your actual configuration. Do not commit `.env` to Git.
+
+### 4. Initialize the Database
+
+Generate the Prisma client:
+
+```bash
+npx prisma generate
+```
+
+Push the Prisma schema to your Supabase database:
+
+```bash
+npx prisma db push
+```
+
+### 5. Run the Development Server
+
+Start the Next.js development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open the URL in your browser to start using EduNexus.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+EduNexus requires environment variables for authentication, database connectivity, and AI functionality.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Typical configuration includes:
 
-## Deploy on Vercel
+| Variable          | Purpose                                 |
+| ----------------- | --------------------------------------- |
+| `NEXTAUTH_SECRET` | Secret used by NextAuth.js              |
+| `NEXTAUTH_URL`    | Application URL                         |
+| `DATABASE_URL`    | Supabase/PostgreSQL database connection |
+| `AI_API_KEY`      | API key for AI functionality            |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> **Security:** Never expose API keys, database credentials, or authentication secrets in your source code or public repository.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📌 Available Routes
+
+| Route        | Description                           |
+| ------------ | ------------------------------------- |
+| `/roadmaps`  | Browse structured learning roadmaps   |
+| `/arena`     | Practice technical challenges         |
+| `/ai-tutor`  | Interact with the AI Tutor            |
+| `/tracker`   | Track job and internship applications |
+| `/community` | Connect with other learners           |
+
+---
+
+## 🚀 Future Improvements
+
+Potential future enhancements include:
+
+* AI-powered personalized roadmaps
+* Advanced progress tracking
+* More technical challenge modules
+* Enhanced community features
+* Internship and job recommendations
+* AI-powered interview preparation
+* Real-time notifications
+* More learning resources and domains
+
+---
+
+## 📄 License
+
+This project is intended for educational and portfolio purposes.
