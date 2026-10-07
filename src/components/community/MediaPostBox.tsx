@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
-import { Image as ImageIcon, Video, Link as LinkIcon, BarChart2, Zap, Loader2, X, Plus } from "lucide-react";
+import { Image as ImageIcon, Video, Link as LinkIcon, BarChart2, Loader2, X, Plus } from "lucide-react";
+import { card, focus } from "./ui";
+import Avatar from "./Avatar";
 
 export default function MediaPostBox({ session, createPostAction, placeholder }: any) {
   const [content, setContent] = useState("");
@@ -12,7 +14,7 @@ export default function MediaPostBox({ session, createPostAction, placeholder }:
   const [showPoll, setShowPoll] = useState(false);
   const [pollOptions, setPollOptions] = useState(["", ""]);
   const [isUploading, setIsUploading] = useState(false);
-  
+
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -41,62 +43,73 @@ export default function MediaPostBox({ session, createPostAction, placeholder }:
       }
     }
 
-    await createPostAction({ 
-      content, 
-      mediaUrl, 
-      mediaType, 
-      externalLink: linkUrl, 
-      pollData: showPoll ? { options: pollOptions.filter(o => o.trim() !== "") } : null 
+    await createPostAction({
+      content,
+      mediaUrl,
+      mediaType,
+      externalLink: linkUrl,
+      pollData: showPoll ? { options: pollOptions.filter(o => o.trim() !== "") } : null
     });
-    
+
     setContent(""); setFile(null); setLinkUrl(""); setShowLink(false); setShowPoll(false); setPollOptions(["", ""]);
     setIsUploading(false);
   };
 
+  const tool = `flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-gray-400 transition hover:bg-white/5 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-cyan-300 ${focus}`;
+  const disabled = isUploading || (!content && !file && !linkUrl && !pollOptions[0]);
+
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
+    <div className={`${card} p-4 transition-colors focus-within:border-cyan-400/40 sm:p-5`}>
+      <span aria-hidden className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent" />
       <form onSubmit={handleUpload} className="space-y-3">
-        <div className="flex gap-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold shrink-0">
-            {session?.user?.name?.[0] || "P"}
-          </div>
+        <div className="flex gap-3 sm:gap-4">
+          <Avatar src={session?.user?.image} name={session?.user?.name} />
           <div className="w-full space-y-2">
-            <textarea 
-              value={content} onChange={(e) => setContent(e.target.value)} placeholder={placeholder}
-              className="w-full bg-black/20 rounded-2xl p-4 focus:ring-1 focus:ring-cyan-500/50 outline-none text-base text-white resize-none" rows={2}
+            <label htmlFor="community-post" className="sr-only">Write a post</label>
+            <textarea
+              id="community-post" value={content} onChange={(e) => setContent(e.target.value)} placeholder={placeholder}
+              className="w-full resize-none rounded-2xl bg-black/30 p-4 text-base text-white outline-none placeholder:text-gray-500 focus:ring-1 focus:ring-cyan-500/50" rows={2}
             />
 
             {showLink && (
-              <div className="flex items-center gap-2 bg-white/5 p-2 rounded-xl border border-white/10 animate-in slide-in-from-top-1">
-                <LinkIcon size={14} className="text-blue-400 ml-2" />
-                <input type="url" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} placeholder="https://..." className="bg-transparent text-xs text-blue-300 w-full outline-none" />
-                <button type="button" onClick={() => { setShowLink(false); setLinkUrl(""); }}><X size={14} /></button>
+              <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-2 animate-in slide-in-from-top-1">
+                <LinkIcon size={14} className="ml-2 text-blue-400" aria-hidden />
+                <input type="url" aria-label="Link URL" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} placeholder="https://..." className="w-full bg-transparent text-xs text-blue-300 outline-none" />
+                <button type="button" aria-label="Remove link" className={`rounded p-1 ${focus}`} onClick={() => { setShowLink(false); setLinkUrl(""); }}><X size={14} /></button>
               </div>
             )}
 
             {showPoll && (
-              <div className="bg-white/5 border border-white/10 p-4 rounded-xl space-y-2 animate-in slide-in-from-top-1">
-                <div className="flex justify-between items-center mb-1"><span className="text-[10px] font-bold text-orange-400 uppercase">Poll Options</span><button type="button" onClick={() => setShowPoll(false)}><X size={14} /></button></div>
+              <div className="space-y-2 rounded-xl border border-white/10 bg-white/5 p-4 animate-in slide-in-from-top-1">
+                <div className="mb-1 flex items-center justify-between">
+                  <span className="font-mono text-[11px] tracking-wider text-orange-400">POLL OPTIONS</span>
+                  <button type="button" aria-label="Remove poll" className={`rounded p-1 ${focus}`} onClick={() => setShowPoll(false)}><X size={14} /></button>
+                </div>
                 {pollOptions.map((opt, i) => (
-                  <input key={i} value={opt} onChange={(e) => { const n = [...pollOptions]; n[i] = e.target.value; setPollOptions(n); }} placeholder={`Option ${i+1}`} className="w-full bg-black/40 border border-white/5 rounded-lg px-3 py-2 text-xs text-white outline-none" />
+                  <input key={i} aria-label={`Poll option ${i + 1}`} value={opt} onChange={(e) => { const n = [...pollOptions]; n[i] = e.target.value; setPollOptions(n); }} placeholder={`Option ${i + 1}`} className="w-full rounded-lg border border-white/5 bg-black/40 px-3 py-2 text-xs text-white outline-none focus:border-orange-400/50" />
                 ))}
-                {pollOptions.length < 4 && <button type="button" onClick={addOption} className="text-[10px] font-bold text-gray-500 hover:text-orange-400 flex items-center gap-1"><Plus size={12}/> Add Option</button>}
+                {pollOptions.length < 4 && <button type="button" onClick={addOption} className={`flex items-center gap-1 rounded text-xs font-semibold text-gray-400 hover:text-orange-400 ${focus}`}><Plus size={12} /> Add option</button>}
               </div>
             )}
 
-            {file && <div className="flex items-center justify-between bg-cyan-500/10 border border-cyan-500/30 px-3 py-2 rounded-xl"><span className="text-xs text-cyan-400 truncate max-w-[200px]">File: {file.name}</span><button type="button" onClick={() => setFile(null)}><X size={14} /></button></div>}
+            {file && (
+              <div className="flex items-center justify-between rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-3 py-2">
+                <span className="max-w-[200px] truncate text-xs text-cyan-300">File: {file.name}</span>
+                <button type="button" aria-label="Remove file" className={`rounded p-1 ${focus}`} onClick={() => setFile(null)}><X size={14} /></button>
+              </div>
+            )}
           </div>
         </div>
-        
-        <div className="flex justify-between items-center mt-4 border-t border-white/5 pt-4">
-          <div className="flex gap-4 text-gray-400">
-            <label className="cursor-pointer hover:text-cyan-400 transition flex items-center gap-1 text-xs"><ImageIcon size={18} /> Photo<input type="file" accept="image/*" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} /></label>
-            <label className="cursor-pointer hover:text-purple-400 transition flex items-center gap-1 text-xs"><Video size={18} /> Video<input type="file" accept="video/*" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} /></label>
-            <button type="button" onClick={() => setShowLink(!showLink)} className="hover:text-blue-400 transition flex items-center gap-1 text-xs"><LinkIcon size={18} /> Link</button>
-            <button type="button" onClick={() => setShowPoll(!showPoll)} className="hover:text-orange-400 transition flex items-center gap-1 text-xs"><BarChart2 size={18} /> Poll</button>
+
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-4">
+          <div className="flex flex-wrap gap-1">
+            <label className={`${tool} hover:text-cyan-300`}><ImageIcon size={18} aria-hidden /> Photo<input type="file" accept="image/*" className="sr-only" onChange={(e) => setFile(e.target.files?.[0] || null)} /></label>
+            <label className={`${tool} hover:text-fuchsia-300`}><Video size={18} aria-hidden /> Video<input type="file" accept="video/*" className="sr-only" onChange={(e) => setFile(e.target.files?.[0] || null)} /></label>
+            <button type="button" aria-pressed={showLink} onClick={() => setShowLink(!showLink)} className={`${tool} hover:text-blue-300`}><LinkIcon size={18} aria-hidden /> Link</button>
+            <button type="button" aria-pressed={showPoll} onClick={() => setShowPoll(!showPoll)} className={`${tool} hover:text-orange-300`}><BarChart2 size={18} aria-hidden /> Poll</button>
           </div>
-          <button disabled={isUploading || (!content && !file && !linkUrl && !pollOptions[0])} className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white px-6 py-2 rounded-lg font-bold transition">
-            {isUploading ? <Loader2 className="animate-spin" size={16} /> : "Post Story"}
+          <button disabled={disabled} className={`rounded-full bg-cyan-400 px-6 py-2 text-sm font-bold text-black transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 ${focus}`}>
+            {isUploading ? <Loader2 className="animate-spin" size={16} aria-label="Posting" /> : "Post story"}
           </button>
         </div>
       </form>
