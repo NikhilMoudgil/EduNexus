@@ -47,7 +47,7 @@ const HeroSection = () => {
             <span className="text-cyan-400 italic">Build one.</span>
           </motion.h1>
           <motion.p variants={itemVariants} className="text-lg md:text-xl text-gray-300 font-light mb-10 leading-relaxed max-w-lg">
-            EduNexus turns your goals, skills, and interests into a personalized path from learning to projects, internships, and placement.
+            Cognitra turns your goals, skills, and interests into a personalized path from learning to projects, internships, and placement.
           </motion.p>
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
             <Link href="/generate" className="px-8 py-4 bg-cyan-400/15 text-cyan-300 border border-cyan-400/40 rounded-none hover:bg-cyan-400/25 hover:border-cyan-400/60 transition-all text-sm font-semibold tracking-wide uppercase flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,229,255,0.15)]">
@@ -135,7 +135,7 @@ const ProblemSection = () => {
             <div className="w-px h-6 bg-cyan-400"></div>
             
             <div className="border border-cyan-400 bg-cyan-400/15 text-cyan-300 px-8 py-4 mt-2 text-base font-semibold tracking-wide rounded-md shadow-[0_0_25px_rgba(0,229,255,0.2)]">
-              EduNexus connects the dots.
+              Cognitra connects the dots.
             </div>
           </div>
         </div>
