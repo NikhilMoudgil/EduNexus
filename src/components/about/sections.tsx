@@ -51,7 +51,7 @@ export function AboutHero() {
           Engineering the future of <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-fuchsia-500 bg-clip-text text-transparent">career readiness.</span>
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-400">
-          Cognitra connects learning, simulation and intelligence into one platform, so technical practice turns into measurable readiness. It is independently engineered by one developer with a much larger vision.
+          EduNexus connects learning, simulation and intelligence into one platform, so technical practice turns into measurable readiness. It is independently engineered by one developer with a much larger vision.
         </p>
         <div className="mt-9 flex flex-wrap gap-3">
           <Link href="/dashboard" className={`${btn} bg-cyan-400 text-black hover:bg-white`}>Enter the Arena <ArrowRight className="h-4 w-4" /></Link>

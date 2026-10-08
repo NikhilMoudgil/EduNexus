@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1">
             <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-tighter block mb-4">
-              Cognitra
+              EduNexus
             </span>
             <p className="text-sm text-gray-500 leading-relaxed pr-4">
               Empowering learners with structured paths to success through community-driven roadmaps.
@@ -60,7 +60,7 @@ export default function Footer() {
         {/* Centered Copyright */}
         <div className="pt-8 border-t border-white/5 flex justify-center items-center">
           <p className="text-xs text-gray-600">
-            © {new Date().getFullYear()} Cognitra. All rights reserved.
+            © {new Date().getFullYear()} EduNexus. All rights reserved.
           </p>
         </div>
       </div>

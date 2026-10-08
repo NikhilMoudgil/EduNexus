@@ -9,7 +9,7 @@ import Script from "next/script"; // 🚀 Added for external assets
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cognitra | Modern Learning Hub",
+  title: "EduNexus | Modern Learning Hub",
   description: "Your Educational Hub for 100+ professional roadmaps.",
 };
 

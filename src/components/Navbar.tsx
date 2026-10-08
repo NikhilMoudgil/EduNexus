@@ -17,7 +17,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <span className="text-2xl font-black text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 tracking-tighter group-hover:opacity-80 transition-opacity">
-              Cognitra
+              EduNexus
             </span>
           </Link>
 
