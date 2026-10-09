@@ -1,113 +1,63 @@
-// 1. 🚀 THE MISSING IMPORTS
-import fs from "fs";
-import path from "path";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getRoadmaps } from "@/lib/roadmaps";
+import { CATEGORIES } from "@/lib/roadmap-meta";
 import RoadmapSearch from "@/components/roadmaps/RoadmapSearch";
 
-// 2. THE INTERFACE
-interface Roadmap {
-  id: string;
-  title: string;
-  type: string;
-  description: string;
-  icon: string;
-  color: string;
-}
+const mono = "font-mono text-[11px] tracking-wider text-white/45";
+const focus = "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300";
 
-// 3. THE STYLE DEFINITIONS (Required for your map logic)
-const featuredStyles: Record<string, { icon: string, color: string, description: string }> = {
-  "official_flutter": { icon: "fab fa-flutter", color: "from-blue-600 to-cyan-500", description: "Complete path from beginner to advanced dApp development." },
-  "official_devops": { icon: "fas fa-infinity", color: "from-green-600 to-teal-500", description: "Master CI/CD, cloud infrastructure, and automation tools." },
-  "official_react": { icon: "fab fa-react", color: "from-blue-500 to-indigo-600", description: "Build scalable user interfaces using modern React best practices." },
-  "official_frontend": { icon: "fas fa-code", color: "from-purple-600 to-pink-500", description: "The core foundations of the web: HTML, CSS, JavaScript, and beyond." },
-  "official_backend": { icon: "fas fa-server", color: "from-orange-600 to-red-500", description: "Deep dive into PostgreSQL and server logic." },
-  "official_android_kotlin": { icon: "fab fa-android", color: "from-emerald-600 to-green-500", description: "Build native mobile applications using Kotlin and Jetpack Compose." },
-};
-
-export default async function RoadmapsListingPage() {
+export default async function RoadmapsListingPage({ searchParams }: { searchParams: Promise<{ q?: string; cat?: string }> }) {
+  const { q = "", cat = "all" } = await searchParams;
   const session = await getServerSession(authOptions);
-  
-  const roadmapsDir = path.join(process.cwd(), "src/content/roadmaps");
-  let allOfficialRoadmaps: Roadmap[] = [];
+  const roadmaps = getRoadmaps();
+  const tracks = CATEGORIES.filter((c) => roadmaps.some((r) => r.category === c.key)).length;
 
-  if (fs.existsSync(roadmapsDir)) {
-    const files = fs.readdirSync(roadmapsDir);
-    
-    allOfficialRoadmaps = files
-      .filter(file => file.endsWith(".md"))
-      .map((file): Roadmap => {
-        const id = file.replace(".md", "");
-        const style = featuredStyles[id];
-        
-        const title = id
-          .replace("official_", "")
-          .split("_")
-          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(" ");
-
-        return {
-          id,
-          title,
-          type: "Official Guide",
-          description: style?.description || `Master the core principles of ${title} in this EduNexus Pro Guide.`,
-          icon: style?.icon || "fas fa-book-open",
-          color: style?.color || "from-gray-700 to-slate-900",
-        };
-      });
-  }
-
-  // Database Fetch for AI Roadmap history
   let userRoadmaps: any[] = [];
   if (session?.user) {
-    const userId = (session.user as any).id;
-    userRoadmaps = await db.combinedPlan.findMany({
-      where: { userId: userId },
-      orderBy: { createdAt: "desc" },
-    });
+    userRoadmaps = await db.combinedPlan.findMany({ where: { userId: (session.user as any).id }, orderBy: { createdAt: "desc" } });
   }
+  const latest = userRoadmaps[0];
 
   return (
-    <div className="relative min-h-screen bg-[#05050f] text-white pt-24 pb-12 px-6 overflow-hidden">
-      
-      {/* Background Glow */}
-      <div className="absolute top-[-10%] left-[-10%] w-125 h-125 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
-      
-      <div className="max-w-7xl mx-auto relative z-10">
-        
-        {/* Header Section */}
-        <div className="mb-10 text-left">
-          <h1 className="text-5xl font-black text-white tracking-tight leading-tight">Roadmaps</h1>
-          <p className="mt-4 text-lg text-gray-400 max-w-2xl font-light leading-relaxed">
-            Step-by-step learning paths. Explore our library of 100+ domains or view your custom AI generations.
-          </p>
-        </div>
+    <main className="relative min-h-screen overflow-x-hidden bg-[#05050f] px-4 pb-24 pt-28 text-white sm:px-6">
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[.06]" style={{ backgroundImage: "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)", backgroundSize: "56px 56px", maskImage: "linear-gradient(#000,transparent 50%)" }} />
+      <div aria-hidden className="pointer-events-none absolute -left-40 -top-32 h-[480px] w-[480px] rounded-full bg-cyan-900/20 blur-[150px]" />
 
-        {/* MOVED: AI CTA SECTION (Now at the top) */}
-        <div className="mb-12 bg-white/5 border border-white/10 rounded-3xl p-10 backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="relative mx-auto max-w-7xl">
+        <header className="mb-10 max-w-3xl">
+          <p className={`${mono} flex items-center gap-2`}><i className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> ROADMAPS / {roadmaps.length} PATHS / {tracks} TRACKS</p>
+          <h1 className="mt-4 text-5xl font-black leading-[1.02] tracking-tighter sm:text-6xl">
+            Find your path. <span className="bg-linear-to-r from-cyan-300 via-blue-400 to-violet-400 bg-clip-text text-transparent">Build the skills that take you there.</span>
+          </h1>
+          <p className="mt-5 max-w-xl text-lg text-gray-400">Structured, phase-by-phase learning paths across development, data, cloud, security, design and business.</p>
+        </header>
+
+        <section aria-label="Start here" className="mb-10 flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/[.03] p-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <h3 className="text-2xl font-extrabold text-white mb-2 tracking-tight">Didn't find what you need?</h3>
-            <p className="text-gray-400 leading-relaxed font-light">
-              Build your customized roadmap with our powerful AI generator.
+            <p className={mono}>NOT SURE WHERE TO START?</p>
+            <p className="mt-1 text-lg font-bold">
+              {latest ? <>Pick up your AI roadmap: <Link href={`/roadmaps/${latest.id}`} className="text-cyan-300 underline-offset-4 hover:underline">{latest.title}</Link></> : "Tell EduNexus what you want to become."}
             </p>
           </div>
-          <Link href="/generate">
-            <button className="w-full md:w-auto bg-linear-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:scale-105 transition-all font-bold">
-              Generate AI Roadmap
-            </button>
+          <Link href="/generate" className={`inline-flex items-center justify-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-sm font-bold text-black transition hover:bg-white ${focus}`}>
+            Find my roadmap <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
-        </div>
+        </section>
 
-        {/* SEARCH & LISTING UI */}
-        <RoadmapSearch 
-          officialRoadmaps={allOfficialRoadmaps} 
-          userRoadmaps={userRoadmaps} 
-          isLoggedIn={!!session} 
-        />
+        <RoadmapSearch officialRoadmaps={roadmaps} userRoadmaps={userRoadmaps} isLoggedIn={!!session} initialQuery={q} initialCat={cat} />
 
+        <section className="mt-24 rounded-[2.5rem] border border-white/10 bg-white/[.03] px-6 py-14 text-center">
+          <h2 className="text-3xl font-black tracking-tighter sm:text-4xl">Still not sure where to start?</h2>
+          <p className="mx-auto mt-3 max-w-md text-gray-400">Describe your goal and let EduNexus build a roadmap around it.</p>
+          <Link href="/generate" className={`mt-7 inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-sm font-bold text-black transition hover:bg-white ${focus}`}>
+            Build my roadmap <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }
