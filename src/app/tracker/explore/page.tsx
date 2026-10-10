@@ -32,6 +32,9 @@ export default async function ExplorePage({
   const userId = (session?.user as any)?.id as string | undefined;
   if (!userId) redirect("/login");
 
+  const me = await db.user.findUnique({ where: { id: userId }, select: { role: true } });
+  const isMentor = me?.role === "MENTOR";
+
   const sp = await searchParams;
   const q = first(sp.q)?.trim() || undefined;
   const types = (first(sp.type) ?? "")
@@ -42,6 +45,7 @@ export default async function ExplorePage({
   const closing = toInt(first(sp.closing));
   const sort = first(sp.sort) ?? "new";
   const page = toInt(first(sp.page)) ?? 1;
+  const hasFilters = !!(q || types.length || remote || minStipend || closing);
 
   const now = new Date();
 
@@ -124,6 +128,14 @@ export default async function ExplorePage({
           <p className="text-gray-400 mt-2 font-medium">
             {total} open {total === 1 ? "listing" : "listings"}. Track one and it moves into your pipeline.
           </p>
+          {isMentor && (
+            <Link
+              href="/tracker/explore/new"
+              className="inline-flex items-center gap-2 mt-4 bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+            >
+              Post an opportunity
+            </Link>
+          )}
         </div>
 
         <LiveFeedBanner />
@@ -133,16 +145,35 @@ export default async function ExplorePage({
         {items.length === 0 ? (
           <div className="bg-white/5 border border-white/10 rounded-3xl py-20 px-6 text-center backdrop-blur-xl">
             <SearchX className="w-10 h-10 text-gray-600 mx-auto mb-4" />
-            <p className="text-white font-bold text-lg">Nothing matches these filters</p>
-            <p className="text-gray-500 text-sm mt-1">
-              Remove a filter or widen the stipend and deadline range.
-            </p>
-            <Link
-              href={BASE_PATH}
-              className="inline-block mt-5 text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition"
-            >
-              Clear all filters
-            </Link>
+            {hasFilters ? (
+              <>
+                <p className="text-white font-bold text-lg">Nothing matches these filters</p>
+                <p className="text-gray-500 text-sm mt-1">
+                  Remove a filter or widen the stipend and deadline range.
+                </p>
+                <Link
+                  href={BASE_PATH}
+                  className="inline-block mt-5 text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition"
+                >
+                  Clear all filters
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="text-white font-bold text-lg">No open listings yet</p>
+                <p className="text-gray-500 text-sm mt-1 max-w-md mx-auto">
+                  New internships are pulled in from company career pages and job boards every day. Check back soon.
+                </p>
+                {isMentor && (
+                  <Link
+                    href="/tracker/explore/new"
+                    className="inline-block mt-5 text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition"
+                  >
+                    Post the first opportunity
+                  </Link>
+                )}
+              </>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
