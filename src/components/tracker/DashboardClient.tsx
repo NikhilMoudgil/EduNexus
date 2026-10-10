@@ -1,17 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase-browser";
 import { PlacementApplication } from "@prisma/client";
 import StatCards from "./StatCards";
 import StatusPieChart from "./StatusPieChart";
 import TimelineChart from "./TimelineChart";
 import RecentApplications from "./RecentApplications";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 interface DashboardClientProps {
   userId: string;

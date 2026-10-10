@@ -10,6 +10,7 @@ const links = [
   { href: "/", label: "Start Here" },
   { href: "/roadmaps", label: "Roadmaps" },
   { href: "/community", label: "Community" },
+  { href: "/tracker", label: "Tracker" },
   { href: "/about", label: "About Us" },
 ];
 const focus = "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 rounded";

@@ -28,8 +28,8 @@ export default function StatusPieChart({ applications }: { applications: Placeme
   return (
     <div className="bg-white/5 border border-white/10 rounded-4xl p-8 backdrop-blur-xl shadow-2xl h-100 flex flex-col">
       <h3 className="text-lg font-bold mb-4">Pipeline Status</h3>
-      <div className="grow">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="grow min-h-0 min-w-0">
+        <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 320, height: 240 }}>
           <PieChart>
             <Pie data={data} innerRadius={80} outerRadius={110} paddingAngle={5} dataKey="value" stroke="none">
               {data.map((entry, index) => (

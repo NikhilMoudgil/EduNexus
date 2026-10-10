@@ -6,16 +6,19 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// 1. Setup the standard 'pg' connection pool
-const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({ connectionString });
+function createClient() {
+  // Prisma 7 needs a driver adapter, so the 'pg' pool is created here, and only when no client exists yet.
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    // Every serverless instance on Vercel keeps its own pool. A small cap stops many
+    // instances from together using up the database's connection limit.
+    max: process.env.NODE_ENV === "production" ? 5 : 10,
+  });
+  pool.on("error", (err) => console.error("Unexpected database pool error", err));
 
-// 2. Create the Prisma Adapter
-const adapter = new PrismaPg(pool);
+  return new PrismaClient({ adapter: new PrismaPg(pool) });
+}
 
-// 3. Initialize the client with the adapter (REQUIRED in v7)
-export const db =
-  globalForPrisma.prisma ??
-  new PrismaClient({ adapter });
+export const db = globalForPrisma.prisma ?? createClient();
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;

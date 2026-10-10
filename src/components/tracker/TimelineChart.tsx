@@ -17,8 +17,8 @@ export default function TimelineChart({ applications }: { applications: Placemen
   return (
     <div className="bg-white/5 border border-white/10 rounded-4xl p-8 backdrop-blur-xl shadow-2xl h-100 flex flex-col">
       <h3 className="text-lg font-bold mb-4">Application Timeline</h3>
-      <div className="grow">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="grow min-h-0 min-w-0">
+        <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 320, height: 240 }}>
           <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#ffffff15" vertical={false} />
             <XAxis dataKey="name" stroke="#64748b" tick={{ fill: "#64748b", fontSize: 12 }} axisLine={false} tickLine={false} />

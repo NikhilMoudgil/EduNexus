@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  schemas  = ["public", "auth"]
 }
 
 // ------------------------------------------------------
@@ -13,6 +14,8 @@ datasource db {
 enum UserRole {
   STUDENT
   MENTOR
+
+  @@schema("public")
 }
 
 model User {
@@ -33,6 +36,8 @@ model User {
   posts         Post[]
   comments      Comment[]
   likes         Like[]
+
+  @@schema("public")
 }
 
 model Account {
@@ -52,6 +57,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@schema("public")
 }
 
 model Session {
@@ -60,6 +66,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
 }
 
 model VerificationToken {
@@ -68,6 +76,7 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+  @@schema("public")
 }
 
 // ------------------------------------------------------
@@ -97,6 +106,8 @@ model Post {
   
   comments     Comment[]
   likes        Like[]
+
+  @@schema("public")
 }
 
 model Comment {
@@ -107,6 +118,8 @@ model Comment {
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+
+  @@schema("public")
 }
 
 model Like {
@@ -117,10 +130,10 @@ model Like {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([postId, userId])
+  @@schema("public")
 }
 
 // ------------------------------------------------------
-// // ------------------------------------------------------
 // 3. TRACKER & ROADMAP MODELS
 // ------------------------------------------------------
 
@@ -132,6 +145,8 @@ model CombinedPlan {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@schema("public")
 }
 
 // 🚀 NEW: Types of opportunities Unstop/modern platforms track
@@ -141,17 +156,21 @@ enum OpportunityType {
   HACKATHON
   CASE_COMPETITION
   OPEN_SOURCE
+
+  @@schema("public")
 }
 
 // 🚀 UPDATED: Expanded status pipeline
 enum ApplicationStatus {
   BOOKMARKED
-  SENT             // Kept 'SENT' so your existing DB records don't break
+  SENT              // Kept 'SENT' so your existing DB records don't break
   ASSESSMENT_PENDING
   INTERVIEWING
   OFFERED
   REJECTED
   GHOSTED
+
+  @@schema("public")
 }
 
 model PlacementApplication {
@@ -182,6 +201,7 @@ model PlacementApplication {
   opportunity   Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
 
   @@unique([userId, opportunityId])
+  @@schema("public")
 }
 
 // 🚀 NEW: Track individual interview stages (OA, Technical, HR)
@@ -197,7 +217,10 @@ model InterviewRound {
   
   createdAt     DateTime             @default(now())
   updatedAt     DateTime             @updatedAt
+
+  @@schema("public")
 }
+
 model Opportunity {
   id          String          @id @default(cuid())
   source      String          // "manual", "greenhouse", "community"
@@ -222,4 +245,5 @@ model Opportunity {
 
   @@unique([source, externalId])
   @@index([isActive, postedAt])
+  @@schema("public")
 }

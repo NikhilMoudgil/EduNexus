@@ -1,6 +1,6 @@
 // prisma.config.ts
-import 'dotenv/config'; // 🚀 ADD THIS EXACT LINE AT THE TOP
-import { defineConfig, env } from "prisma/config";
+import "dotenv/config";
+import { defineConfig } from "prisma/config";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -8,7 +8,9 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    // 🛡️ CHANGED: Use DIRECT_URL here so the CLI builds tables without the "s1" error
-    url: env("DIRECT_URL"),
+    // The CLI uses the direct / session-mode URL (port 5432).
+    // The fallback means `prisma generate` still works on a build machine (such as Vercel)
+    // where DIRECT_URL was never added. `env("DIRECT_URL")` throws in that case.
+    url: process.env.DIRECT_URL ?? process.env.DATABASE_URL ?? "",
   },
 });
