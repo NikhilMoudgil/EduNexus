@@ -111,8 +111,11 @@ export default async function ExplorePage({
     return s ? `${BASE_PATH}?${s}` : BASE_PATH;
   };
 
+  const pagerBtn =
+    "flex items-center gap-1 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition";
+
   return (
-    <div className="relative min-h-screen bg-[#05050f] text-white pt-28 pb-12 px-6">
+    <div className="relative min-h-screen overflow-x-clip bg-[#05050f] text-white pt-24 sm:pt-28 pb-24 px-4 sm:px-6">
       <div className="fixed top-1/3 left-1/4 w-150 h-150 bg-blue-900/20 rounded-full blur-[150px] pointer-events-none z-0" />
       <div className="fixed bottom-1/3 right-1/4 w-125 h-125 bg-cyan-900/20 rounded-full blur-[120px] pointer-events-none z-0" />
 
@@ -121,11 +124,11 @@ export default async function ExplorePage({
           <div className="mb-6">
             <TrackerTabs />
           </div>
-          <h1 className="text-4xl font-black flex items-center gap-4 tracking-tighter">
-            <Compass className="w-8 h-8 text-cyan-400" />
+          <h1 className="text-3xl sm:text-4xl font-black flex items-center gap-3 sm:gap-4 tracking-tighter">
+            <Compass className="w-7 h-7 sm:w-8 sm:h-8 text-cyan-400 shrink-0" />
             Explore opportunities
           </h1>
-          <p className="text-gray-400 mt-2 font-medium">
+          <p className="text-gray-400 mt-2 font-medium text-sm sm:text-base">
             {total} open {total === 1 ? "listing" : "listings"}. Track one and it moves into your pipeline.
           </p>
           {isMentor && (
@@ -143,7 +146,7 @@ export default async function ExplorePage({
         <ExploreFilters />
 
         {items.length === 0 ? (
-          <div className="bg-white/5 border border-white/10 rounded-3xl py-20 px-6 text-center backdrop-blur-xl">
+          <div className="bg-white/5 border border-white/10 rounded-3xl py-16 sm:py-20 px-4 sm:px-6 text-center backdrop-blur-xl">
             <SearchX className="w-10 h-10 text-gray-600 mx-auto mb-4" />
             {hasFilters ? (
               <>
@@ -176,7 +179,7 @@ export default async function ExplorePage({
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
             {items.map((opp) => (
               <OpportunityCard key={opp.id} opp={opp} tracked={trackedIds.has(opp.id)} />
             ))}
@@ -184,16 +187,19 @@ export default async function ExplorePage({
         )}
 
         {totalPages > 1 && (
-          <nav className="flex items-center justify-center gap-3 pt-4" aria-label="Pagination">
+          <nav
+            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-4"
+            aria-label="Pagination"
+          >
             {page > 1 ? (
               <Link
                 href={pageHref(page - 1)}
-                className="flex items-center gap-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-sm font-semibold transition"
+                className={`${pagerBtn} bg-white/5 border border-white/10 hover:bg-white/10`}
               >
                 <ChevronLeft className="w-4 h-4" /> Previous
               </Link>
             ) : (
-              <span className="flex items-center gap-1 px-4 py-2 rounded-xl border border-white/5 text-sm text-gray-600">
+              <span className={`${pagerBtn} border border-white/5 text-gray-600`}>
                 <ChevronLeft className="w-4 h-4" /> Previous
               </span>
             )}
@@ -203,12 +209,12 @@ export default async function ExplorePage({
             {page < totalPages ? (
               <Link
                 href={pageHref(page + 1)}
-                className="flex items-center gap-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-sm font-semibold transition"
+                className={`${pagerBtn} bg-white/5 border border-white/10 hover:bg-white/10`}
               >
                 Next <ChevronRight className="w-4 h-4" />
               </Link>
             ) : (
-              <span className="flex items-center gap-1 px-4 py-2 rounded-xl border border-white/5 text-sm text-gray-600">
+              <span className={`${pagerBtn} border border-white/5 text-gray-600`}>
                 Next <ChevronRight className="w-4 h-4" />
               </span>
             )}

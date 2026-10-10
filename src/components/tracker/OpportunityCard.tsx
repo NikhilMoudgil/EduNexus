@@ -55,8 +55,8 @@ export default function OpportunityCard({ opp, tracked }: { opp: Opportunity; tr
   const place = opp.remote ? (opp.location ? `${opp.location} or remote` : "Remote") : opp.location;
 
   return (
-    <article className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl shadow-2xl flex flex-col hover:border-white/20 transition-colors">
-      <div className="flex items-start gap-4">
+    <article className="bg-white/5 border border-white/10 rounded-3xl p-5 sm:p-6 backdrop-blur-xl shadow-2xl flex flex-col min-w-0 hover:border-white/20 transition-colors">
+      <div className="flex items-start gap-3 sm:gap-4">
         {opp.logo ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -73,37 +73,38 @@ export default function OpportunityCard({ opp, tracked }: { opp: Opportunity; tr
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <h3 className="font-bold text-white text-base leading-snug">{opp.title}</h3>
+          <h3 className="font-bold text-white text-base leading-snug break-words">{opp.title}</h3>
           <p className="text-sm text-gray-400 mt-0.5 truncate">{opp.company}</p>
+          {/* Badge moved under the title so long labels like CASE COMPETITION never squeeze the title */}
+          <span
+            className={`inline-block mt-2 px-2 py-0.5 rounded text-[10px] font-bold tracking-wider ${
+              typeColors[opp.type] || "bg-gray-500/20 text-gray-300"
+            }`}
+          >
+            {opp.type.replaceAll("_", " ")}
+          </span>
         </div>
-        <span
-          className={`px-2 py-0.5 rounded text-[10px] font-bold tracking-wider shrink-0 ${
-            typeColors[opp.type] || "bg-gray-500/20 text-gray-300"
-          }`}
-        >
-          {opp.type.replaceAll("_", " ")}
-        </span>
       </div>
 
       <ul className="mt-5 space-y-2 text-sm text-gray-300">
         {place && (
-          <li className="flex items-center gap-2">
+          <li className="flex items-start gap-2 min-w-0">
             {opp.remote ? (
-              <Globe className="w-4 h-4 text-gray-500" />
+              <Globe className="w-4 h-4 mt-0.5 text-gray-500 shrink-0" />
             ) : (
-              <MapPin className="w-4 h-4 text-gray-500" />
+              <MapPin className="w-4 h-4 mt-0.5 text-gray-500 shrink-0" />
             )}
-            {place}
+            <span className="min-w-0 break-words">{place}</span>
           </li>
         )}
         {stipend && (
-          <li className="flex items-center gap-2">
-            <Wallet className="w-4 h-4 text-gray-500" />
-            {stipend}
+          <li className="flex items-start gap-2 min-w-0">
+            <Wallet className="w-4 h-4 mt-0.5 text-gray-500 shrink-0" />
+            <span className="min-w-0 break-words">{stipend}</span>
           </li>
         )}
         <li className="flex items-center gap-2 text-gray-500">
-          <Clock className="w-4 h-4" />
+          <Clock className="w-4 h-4 shrink-0" />
           Posted {timeAgo(opp.postedAt)}
         </li>
       </ul>
@@ -113,7 +114,7 @@ export default function OpportunityCard({ opp, tracked }: { opp: Opportunity; tr
           {opp.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
-              className="text-[11px] bg-white/5 border border-white/10 text-gray-400 px-2 py-0.5 rounded"
+              className="text-[11px] bg-white/5 border border-white/10 text-gray-400 px-2 py-0.5 rounded max-w-full truncate"
             >
               {tag}
             </span>
@@ -124,7 +125,7 @@ export default function OpportunityCard({ opp, tracked }: { opp: Opportunity; tr
         </div>
       )}
 
-      <div className="mt-auto pt-6 flex items-center justify-between gap-3">
+      <div className="mt-auto pt-6 flex flex-wrap items-center justify-between gap-3">
         {deadline ? (
           <span
             className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${

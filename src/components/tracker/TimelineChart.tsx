@@ -15,7 +15,7 @@ export default function TimelineChart({ applications }: { applications: Placemen
   const data = Object.values(monthlyData);
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-4xl p-8 backdrop-blur-xl shadow-2xl h-100 flex flex-col">
+    <div className="bg-white/5 border border-white/10 rounded-4xl p-5 sm:p-8 backdrop-blur-xl shadow-2xl h-80 sm:h-100 flex flex-col min-w-0">
       <h3 className="text-lg font-bold mb-4">Application Timeline</h3>
       <div className="grow min-h-0 min-w-0">
         <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 320, height: 240 }}>

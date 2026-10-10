@@ -34,7 +34,7 @@ const SORTS = [
 ];
 
 const selectClass =
-  "bg-[#0a0a14] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-cyan-500 transition";
+  "w-full lg:w-auto min-w-0 bg-[#0a0a14] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-cyan-500 transition";
 
 export default function ExploreFilters() {
   const router = useRouter();
@@ -84,10 +84,17 @@ export default function ExploreFilters() {
     update({ type: next.length ? next.join(",") : null });
   }
 
+  const chip = (on: boolean) =>
+    `px-3 sm:px-4 py-2 rounded-lg text-xs font-bold border transition ${
+      on
+        ? "bg-cyan-500/20 border-cyan-500 text-cyan-400"
+        : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
+    }`;
+
   return (
-    <div className="bg-white/5 border border-white/10 rounded-3xl p-5 backdrop-blur-xl space-y-4">
+    <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-5 backdrop-blur-xl space-y-4">
       <div className="flex flex-col lg:flex-row gap-3">
-        <div className="relative flex-1">
+        <div className="relative flex-1 min-w-0">
           <Search className="absolute left-3.5 top-3 w-4 h-4 text-gray-500" />
           <input
             value={q}
@@ -99,7 +106,7 @@ export default function ExploreFilters() {
           />
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:flex gap-3">
           <select
             aria-label="Deadline"
             value={params.get("closing") ?? ""}
@@ -148,11 +155,7 @@ export default function ExploreFilters() {
               type="button"
               aria-pressed={on}
               onClick={() => toggleType(t.value)}
-              className={`px-4 py-2 rounded-lg text-xs font-bold border transition ${
-                on
-                  ? "bg-cyan-500/20 border-cyan-500 text-cyan-400"
-                  : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
-              }`}
+              className={chip(on)}
             >
               {t.label}
             </button>
@@ -163,16 +166,12 @@ export default function ExploreFilters() {
           type="button"
           aria-pressed={remote}
           onClick={() => update({ remote: remote ? null : "1" })}
-          className={`px-4 py-2 rounded-lg text-xs font-bold border transition ${
-            remote
-              ? "bg-cyan-500/20 border-cyan-500 text-cyan-400"
-              : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
-          }`}
+          className={chip(remote)}
         >
           Remote only
         </button>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="sm:ml-auto flex items-center gap-3">
           {isPending && <Loader2 className="w-4 h-4 text-cyan-400 animate-spin" aria-label="Updating results" />}
           {hasFilters && (
             <button

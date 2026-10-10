@@ -15,6 +15,8 @@ const links = [
 ];
 const focus = "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 rounded";
 
+// The desktop nav (5 links + AI Tutor + auth) is too wide for 1024-1279px,
+// so the burger menu now stays until the xl breakpoint.
 export default function Navbar() {
   const { data: session, status } = useSession();
   const pathname = usePathname();
@@ -38,13 +40,13 @@ export default function Navbar() {
 
   return (
     <nav aria-label="Main" className={`fixed z-50 w-full border-b transition-all duration-300 motion-reduce:transition-none ${scrolled ? "border-cyan-400/15 bg-[#05050f]/90 shadow-[0_8px_30px_-12px_rgba(34,211,238,0.25)] backdrop-blur-2xl" : "border-white/10 bg-[#05050f]/70 backdrop-blur-md"}`}>
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className={`flex items-center justify-between transition-all duration-300 motion-reduce:transition-none ${scrolled ? "h-16" : "h-20"}`}>
           <Link href="/" className={`group flex items-center gap-2 ${focus}`}>
             <span className="bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-2xl font-black tracking-tighter text-transparent transition-opacity group-hover:opacity-80">EduNexus</span>
           </Link>
 
-          <div className="hidden items-center space-x-6 lg:flex">
+          <div className="hidden items-center space-x-6 xl:flex">
             {links.map((l) => (
               <Link key={l.href} href={l.href} aria-current={active(l.href) ? "page" : undefined}
                 className={`relative text-sm font-medium transition-colors ${focus} ${active(l.href) ? "text-white" : "text-gray-400 hover:text-cyan-300"}`}>
@@ -76,7 +78,7 @@ export default function Navbar() {
             )}
           </div>
 
-          <div className="flex items-center lg:hidden">
+          <div className="flex items-center xl:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-expanded={isMenuOpen} aria-controls="mobile-menu" aria-label={isMenuOpen ? "Close menu" : "Open menu"} className={`p-2 text-gray-300 hover:text-white ${focus}`}>
               <i className={`fas ${isMenuOpen ? "fa-times" : "fa-bars"} text-xl`} aria-hidden></i>
             </button>
@@ -84,9 +86,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div id="mobile-menu" className={`grid transition-all duration-300 motion-reduce:transition-none lg:hidden ${isMenuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+      <div id="mobile-menu" className={`grid transition-all duration-300 motion-reduce:transition-none xl:hidden ${isMenuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
         <div className="overflow-hidden">
-          <div className="space-y-1 border-t border-white/10 bg-[#0a0a1a] px-6 py-4">
+          <div className="max-h-[calc(100dvh-4rem)] space-y-1 overflow-y-auto border-t border-white/10 bg-[#0a0a1a] px-4 sm:px-6 py-4">
             {[...links, { href: "/ai-tutor", label: "AI Tutor" }].map((l) => (
               <Link key={l.href} href={l.href} tabIndex={isMenuOpen ? 0 : -1} aria-current={active(l.href) ? "page" : undefined}
                 className={`block rounded-lg px-3 py-3 text-sm font-medium ${focus} ${active(l.href) ? "bg-cyan-400/10 text-cyan-300" : "text-gray-300"}`}>

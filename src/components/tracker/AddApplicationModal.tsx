@@ -52,11 +52,12 @@ export default function AddApplicationModal({ userId }: { userId: string }) {
     }
   }
 
+  const inputClass =
+    "w-full min-w-0 bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500";
+
   const modal = (
-    // z-[1000] plus the portal puts this above the navbar and the floating buttons.
-    // Rendered inside the page, it was trapped in the page's z-10 stacking context.
     <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-[1000] flex items-end sm:items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) close();
       }}
@@ -65,18 +66,18 @@ export default function AddApplicationModal({ userId }: { userId: string }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="add-opportunity-title"
-        className="bg-[#0a0a14] border border-white/10 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative overflow-y-auto max-h-[90vh] custom-scrollbar"
+        className="bg-[#0a0a14] border border-white/10 rounded-2xl w-full max-w-lg p-5 sm:p-6 shadow-2xl relative overflow-y-auto max-h-[90dvh] custom-scrollbar"
       >
         <button
           type="button"
           onClick={close}
           aria-label="Close"
-          className="absolute top-4 right-4 text-gray-400 hover:text-white"
+          className="absolute top-4 right-4 p-1 text-gray-400 hover:text-white"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <h2 id="add-opportunity-title" className="text-2xl font-bold text-white mb-6">
+        <h2 id="add-opportunity-title" className="text-xl sm:text-2xl font-bold text-white mb-6 pr-8">
           Track New Opportunity
         </h2>
 
@@ -88,7 +89,7 @@ export default function AddApplicationModal({ userId }: { userId: string }) {
               {TYPES.map((type) => (
                 <label
                   key={type}
-                  className={`cursor-pointer px-4 py-2 rounded-lg text-xs font-bold border transition focus-within:ring-2 focus-within:ring-cyan-500/60 ${
+                  className={`cursor-pointer px-3 sm:px-4 py-2 rounded-lg text-xs font-bold border transition focus-within:ring-2 focus-within:ring-cyan-500/60 ${
                     oppType === type
                       ? "bg-cyan-500/20 border-cyan-500 text-cyan-400"
                       : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
@@ -108,21 +109,21 @@ export default function AddApplicationModal({ userId }: { userId: string }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">Company / Organizer</label>
-              <input required name="company" type="text" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500" placeholder="e.g. Google, Unstop" />
+              <input required name="company" type="text" className={inputClass} placeholder="e.g. Google, Unstop" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">{oppType === "HACKATHON" ? "Team/Project Name" : "Role"}</label>
-              <input required name="role" type="text" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500" placeholder={oppType === "HACKATHON" ? "e.g. Solo / Team Nexus" : "e.g. Frontend Intern"} />
+              <input required name="role" type="text" className={inputClass} placeholder={oppType === "HACKATHON" ? "e.g. Solo / Team Nexus" : "e.g. Frontend Intern"} />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">Status</label>
-              <select name="status" className="w-full bg-[#0a0a14] border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500">
+              <select name="status" className="w-full min-w-0 bg-[#0a0a14] border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500">
                 <option value="BOOKMARKED">Bookmarked</option>
                 <option value="SENT">Applied / Registered</option>
                 <option value="ASSESSMENT_PENDING">Assessment Pending</option>
@@ -135,8 +136,8 @@ export default function AddApplicationModal({ userId }: { userId: string }) {
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">Deadline / Date</label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-500" />
-                <input name="deadline" type="date" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 pl-10 text-white focus:outline-none focus:border-cyan-500 [color-scheme:dark]" />
+                <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-500 pointer-events-none" />
+                <input name="deadline" type="date" className={`${inputClass} pl-10 [color-scheme:dark]`} />
               </div>
             </div>
           </div>
@@ -144,23 +145,23 @@ export default function AddApplicationModal({ userId }: { userId: string }) {
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-1">Link</label>
             <div className="relative">
-              <LinkIcon className="absolute left-3 top-3 w-5 h-5 text-gray-500" />
-              <input name="link" type="url" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 pl-10 text-white focus:outline-none focus:border-cyan-500" placeholder="https://..." />
+              <LinkIcon className="absolute left-3 top-3 w-5 h-5 text-gray-500 pointer-events-none" />
+              <input name="link" type="url" className={`${inputClass} pl-10`} placeholder="https://..." />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-1">Skills / Tags (Comma separated)</label>
             <div className="relative">
-              <Hash className="absolute left-3 top-3 w-5 h-5 text-gray-500" />
-              <input name="tags" type="text" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 pl-10 text-white focus:outline-none focus:border-cyan-500" placeholder="React, Next.js, Data Analysis" />
+              <Hash className="absolute left-3 top-3 w-5 h-5 text-gray-500 pointer-events-none" />
+              <input name="tags" type="text" className={`${inputClass} pl-10`} placeholder="React, Next.js, Data Analysis" />
             </div>
           </div>
 
           {oppType === "JOB" || oppType === "INTERNSHIP" ? (
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">Expected Salary / Stipend</label>
-              <input name="salary" type="number" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500" placeholder="e.g. 85000" />
+              <input name="salary" type="number" className={inputClass} placeholder="e.g. 85000" />
             </div>
           ) : null}
 
