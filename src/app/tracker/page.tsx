@@ -6,6 +6,7 @@ import { Briefcase } from "lucide-react";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import DashboardClient from "@/components/tracker/DashboardClient";
 import AddApplicationModal from "@/components/tracker/AddApplicationModal";
+import TrackerTabs from "@/components/tracker/TrackerTabs";
 
 export default async function PlacementTrackerPage() {
   // 🚀 PASS AUTH OPTIONS HERE
@@ -34,7 +35,12 @@ export default async function PlacementTrackerPage() {
       <div className="fixed bottom-1/3 right-1/4 w-125 h-125 bg-cyan-900/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
+        {/* Switch between "My tracker" and "Explore" */}
+        <div className="mb-6">
+          <TrackerTabs />
+        </div>
+
         <div className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-4xl font-black flex items-center gap-4 tracking-tighter">

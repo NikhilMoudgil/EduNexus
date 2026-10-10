@@ -8,5 +8,5 @@ export default withAuth({
 
 // This protects the /community page and any future dashboard pages
 export const config = { 
-  matcher: ["/community/:path*", "/dashboard/:path*"] 
+  matcher: ["/community/:path*", "/dashboard/:path*", "/tracker/:path*"]
 };

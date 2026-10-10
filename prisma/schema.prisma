@@ -178,6 +178,10 @@ model PlacementApplication {
 
   // 🚀 NEW: Relational data for multi-stage interviews
   rounds        InterviewRound[]
+  opportunityId String?
+  opportunity   Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, opportunityId])
 }
 
 // 🚀 NEW: Track individual interview stages (OA, Technical, HR)
@@ -193,4 +197,29 @@ model InterviewRound {
   
   createdAt     DateTime             @default(now())
   updatedAt     DateTime             @updatedAt
+}
+model Opportunity {
+  id          String          @id @default(cuid())
+  source      String          // "manual", "greenhouse", "community"
+  externalId  String
+  title       String
+  company     String
+  logo        String?
+  type        OpportunityType @default(INTERNSHIP)
+  location    String?
+  remote      Boolean         @default(false)
+  stipendMin  Int?
+  stipendMax  Int?
+  currency    String          @default("INR")
+  tags        String[]
+  applyUrl    String
+  deadline    DateTime?
+  postedAt    DateTime        @default(now())
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+
+  applications PlacementApplication[]
+
+  @@unique([source, externalId])
+  @@index([isActive, postedAt])
 }
