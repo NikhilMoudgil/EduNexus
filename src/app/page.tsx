@@ -15,7 +15,6 @@ import {
 
 
 // Importing the modular components based on your directory structure
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 // ==========================================
@@ -36,24 +35,24 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[85vh] flex flex-col justify-center pt-36 pb-16 overflow-hidden">
+    <section className="relative min-h-[85dvh] flex flex-col justify-center pt-28 sm:pt-36 pb-16 overflow-hidden">
       {/* Background grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="max-w-2xl">
-          <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-semibold tracking-tight text-gray-100 mb-6 leading-[1.1]">
+          <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl md:text-7xl font-semibold tracking-tight text-gray-100 mb-6 leading-[1.1]">
             Your degree isn't a roadmap. <br />
             <span className="text-cyan-400 italic">Build one.</span>
           </motion.h1>
-          <motion.p variants={itemVariants} className="text-lg md:text-xl text-gray-300 font-light mb-10 leading-relaxed max-w-lg">
+          <motion.p variants={itemVariants} className="text-base sm:text-lg md:text-xl text-gray-300 font-light mb-8 sm:mb-10 leading-relaxed max-w-lg">
             EduNexus turns your goals, skills, and interests into a personalized path from learning to projects, internships, and placement.
           </motion.p>
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
-            <Link href="/generate" className="px-8 py-4 bg-cyan-400/15 text-cyan-300 border border-cyan-400/40 rounded-none hover:bg-cyan-400/25 hover:border-cyan-400/60 transition-all text-sm font-semibold tracking-wide uppercase flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,229,255,0.15)]">
+            <Link href="/generate" className="px-6 sm:px-8 py-4 bg-cyan-400/15 text-cyan-300 border border-cyan-400/40 rounded-none hover:bg-cyan-400/25 hover:border-cyan-400/60 transition-all text-sm font-semibold tracking-wide uppercase flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,229,255,0.15)]">
               Build My Roadmap
             </Link>
-            <Link href="/roadmaps" className="px-8 py-4 bg-transparent text-gray-200 border border-gray-700 rounded-none hover:bg-gray-800/60 hover:text-white transition-all text-sm font-semibold tracking-wide uppercase flex items-center justify-center">
+            <Link href="/roadmaps" className="px-6 sm:px-8 py-4 bg-transparent text-gray-200 border border-gray-700 rounded-none hover:bg-gray-800/60 hover:text-white transition-all text-sm font-semibold tracking-wide uppercase flex items-center justify-center">
               Explore Roadmaps
             </Link>
           </motion.div>
@@ -103,26 +102,26 @@ const HeroSection = () => {
 // ==========================================
 const ProblemSection = () => {
   return (
-    <section className="py-24 bg-[#020408] border-t border-white/10 relative overflow-hidden">
+    <section className="py-16 sm:py-24 bg-[#020408] border-t border-white/10 relative overflow-hidden">
       {/* Background radial glow to boost brightness */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
         <div>
-          <h2 className="text-3xl md:text-5xl font-semibold text-gray-200 tracking-tight mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold text-gray-200 tracking-tight mb-3">
             Most students don't have a learning problem.
           </h2>
-          <h3 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-md">
+          <h3 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-md">
             They have a <span className="text-cyan-400 underline decoration-cyan-500/40 underline-offset-8">direction</span> problem.
           </h3>
           
-          <div className="mt-16 flex flex-col items-center gap-4 text-gray-200 font-mono text-sm">
+          <div className="mt-12 sm:mt-16 flex flex-col items-center gap-4 text-gray-200 font-mono text-sm">
             <div className="border border-cyan-500/30 bg-cyan-950/20 text-cyan-300 px-6 py-3 rounded-md shadow-md font-medium">
               What should I learn?
             </div>
             <div className="w-px h-6 bg-gradient-to-b from-cyan-400 to-white/20"></div>
             
-            <div className="flex gap-4">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               <div className="border border-white/15 bg-white/10 text-gray-300 px-4 py-2 rounded-md font-medium">React?</div>
               <div className="border border-white/15 bg-white/10 text-gray-300 px-4 py-2 rounded-md font-medium">Python?</div>
               <div className="border border-white/15 bg-white/10 text-gray-300 px-4 py-2 rounded-md font-medium">AI?</div>
@@ -134,7 +133,7 @@ const ProblemSection = () => {
             </div>
             <div className="w-px h-6 bg-cyan-400"></div>
             
-            <div className="border border-cyan-400 bg-cyan-400/15 text-cyan-300 px-8 py-4 mt-2 text-base font-semibold tracking-wide rounded-md shadow-[0_0_25px_rgba(0,229,255,0.2)]">
+            <div className="border border-cyan-400 bg-cyan-400/15 text-cyan-300 px-6 sm:px-8 py-4 mt-2 text-base font-semibold tracking-wide rounded-md text-center shadow-[0_0_25px_rgba(0,229,255,0.2)]">
               EduNexus connects the dots.
             </div>
           </div>
@@ -238,12 +237,12 @@ export const LearningRoadmapHero = () => {
     <section
       ref={containerRef}
       id="learning-roadmap-section"
-      className="py-24 bg-[#03050a] text-gray-200 border-t border-white/5 relative overflow-hidden"
+      className="py-16 sm:py-24 bg-[#03050a] text-gray-200 border-t border-white/5 relative overflow-hidden"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-cyan-500/5 blur-[160px] pointer-events-none rounded-full" />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header */}
         <div className="mb-12 max-w-2xl">
@@ -251,7 +250,7 @@ export const LearningRoadmapHero = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
             AI Interactive Path Engine
           </div>
-          <h2 className="text-4xl md:text-5xl font-semibold text-white tracking-tight leading-[1.12] mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-tight leading-[1.12] mb-3">
             From confused <span className="text-cyan-400 italic">to clear.</span>
           </h2>
           <p className="text-gray-400 text-base md:text-lg font-light leading-relaxed">
@@ -262,7 +261,7 @@ export const LearningRoadmapHero = () => {
         {/* AI Roadmap Summary Bar */}
         <div className="border border-white/10 bg-[#020408]/90 backdrop-blur-md rounded-2xl p-5 md:p-6 mb-12 shadow-2xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
               <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
               <span className="text-xs font-mono tracking-wider font-semibold text-gray-200">
                 AI GENERATED ROADMAP
@@ -321,7 +320,7 @@ export const LearningRoadmapHero = () => {
         <div className="relative pl-6 md:pl-10">
           
           {/* Animated Tracing Line */}
-          <div className="absolute left-2.5 md:left-4 top-4 bottom-4 w-[2px] pointer-events-none flex justify-center">
+          <div className="absolute left-[13px] top-4 bottom-4 w-[2px] pointer-events-none flex justify-center">
             <div className="w-[2px] h-full bg-white/10 rounded-full" />
             <motion.div
               className="absolute top-0 w-[2px] bg-gradient-to-b from-cyan-400 via-violet-500 to-amber-400 rounded-full shadow-[0_0_12px_rgba(0,229,255,0.7)] origin-top"
@@ -395,7 +394,7 @@ export const LearningRoadmapHero = () => {
 
                   {/* Stage Card */}
                   <div
-                    className={`flex-1 p-5 md:p-6 rounded-xl border transition-all duration-300 ${
+                    className={`flex-1 min-w-0 p-4 sm:p-5 md:p-6 rounded-xl border transition-all duration-300 ${
                       isActive
                         ? "border-cyan-500/50 bg-[#040812] shadow-[0_0_30px_rgba(0,229,255,0.12)]"
                         : isCompleted
@@ -403,8 +402,8 @@ export const LearningRoadmapHero = () => {
                         : "border-white/5 bg-[#020408]/30 hover:border-white/10"
                     }`}
                   >
-                    <div className="flex justify-between items-center mb-2">
-                      <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap justify-between items-center gap-2 mb-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span
                           className={`text-[10px] font-mono px-2 py-0.5 rounded uppercase font-semibold tracking-wider ${
                             isGoalNode
@@ -429,7 +428,7 @@ export const LearningRoadmapHero = () => {
                     </div>
 
                     <h3
-                      className={`text-xl md:text-2xl font-semibold mb-2 tracking-tight ${
+                      className={`text-lg sm:text-xl md:text-2xl font-semibold mb-2 tracking-tight ${
                         isGoalNode && (isActive || isCompleted)
                           ? "text-amber-400"
                           : isActive
@@ -582,14 +581,14 @@ const RoadmapJourney = () => {
     <section
       ref={containerRef}
       id="roadmap-journey-section"
-      className="relative bg-[#020408] border-t border-white/10 md:h-[280vh]"
+      className="relative overflow-x-clip bg-[#020408] border-t border-white/10 [@media(min-width:1024px)_and_(min-height:760px)]:h-[280vh]"
     >
       {/* Background ambient lighting glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-cyan-500/5 blur-[180px] pointer-events-none rounded-full" />
 
       {/* Sticky Viewport Frame for Scroll-Driven Interactive Experience */}
-      <div className="md:sticky md:top-0 md:h-screen md:flex md:flex-col md:justify-center py-16 md:py-0 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 w-full">
+      <div className="py-16 overflow-x-clip [@media(min-width:1024px)_and_(min-height:760px)]:sticky [@media(min-width:1024px)_and_(min-height:760px)]:top-0 [@media(min-width:1024px)_and_(min-height:760px)]:h-screen [@media(min-width:1024px)_and_(min-height:760px)]:flex [@media(min-width:1024px)_and_(min-height:760px)]:flex-col [@media(min-width:1024px)_and_(min-height:760px)]:justify-center [@media(min-width:1024px)_and_(min-height:760px)]:pt-20 [@media(min-width:1024px)_and_(min-height:760px)]:pb-0 [@media(min-width:1024px)_and_(min-height:760px)]:overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
           
           {/* Section Introduction Header */}
           <div className="mb-8 md:mb-10 max-w-2xl">
@@ -597,7 +596,7 @@ const RoadmapJourney = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
               HOW IT COMES TOGETHER
             </div>
-            <h2 className="text-3xl md:text-5xl font-semibold text-white tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-tight leading-tight">
               A clear path from <span className="text-cyan-400 italic">learning to opportunity.</span>
             </h2>
           </div>
@@ -609,7 +608,7 @@ const RoadmapJourney = () => {
             <div className="lg:col-span-5 relative pl-6 md:pl-8">
               
               {/* Connecting Journey Line */}
-              <div className="absolute left-2 md:left-3 top-2 bottom-2 w-[2px] bg-white/10 rounded-full pointer-events-none">
+              <div className="absolute left-[10px] md:left-[14px] top-2 bottom-2 w-[2px] bg-white/10 rounded-full pointer-events-none">
                 <motion.div
                   className="w-full bg-gradient-to-b from-cyan-400 via-purple-500 to-amber-400 rounded-full origin-top"
                   style={{ scaleY: journeyLineScaleY, height: "100%" }}
@@ -714,14 +713,14 @@ const RoadmapJourney = () => {
 
             {/* Right Column: Living Visual Stage Simulator */}
             <div className="lg:col-span-7">
-              <div className="relative border border-white/10 bg-[#03050a]/90 backdrop-blur-xl rounded-2xl p-6 md:p-8 shadow-2xl overflow-hidden min-h-[380px] md:min-h-[420px] flex flex-col justify-between">
+              <div className="relative border border-white/10 bg-[#03050a]/90 backdrop-blur-xl rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden min-h-[380px] md:min-h-[420px] flex flex-col justify-between">
                 
                 {/* Background Grid & Ambient Glow */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
                 <div className="absolute -right-20 -top-20 w-64 h-64 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
 
                 {/* Visual Stage Header */}
-                <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/10">
+                <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-white/10">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                     <span className="text-xs font-mono font-semibold text-cyan-300 tracking-wider">
@@ -762,7 +761,7 @@ const RoadmapJourney = () => {
                           </div>
                         </div>
 
-                        <div className="p-3 rounded-lg border border-dashed border-white/20 bg-white/[0.02] flex items-center justify-between text-xs font-mono text-gray-400">
+                        <div className="p-3 rounded-lg border border-dashed border-white/20 bg-white/[0.02] flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-gray-400">
                           <span>DIRECTION PIPELINE</span>
                           <span className="text-cyan-400 font-semibold">Goal → Analysis → Roadmap</span>
                         </div>
@@ -782,36 +781,36 @@ const RoadmapJourney = () => {
                         <div className="text-xs font-mono text-gray-400 mb-2">PERSONALIZED LEARNING MODULES</div>
                         
                         <div className="space-y-2 text-xs font-mono">
-                          <div className="p-3 rounded-lg border border-cyan-500/40 bg-cyan-950/30 flex items-center justify-between text-cyan-200">
+                          <div className="p-3 rounded-lg border border-cyan-500/40 bg-cyan-950/30 flex items-center justify-between gap-2 text-cyan-200">
                             <div className="flex items-center gap-2">
                               <span className="text-cyan-400">✓</span>
                               <span>Foundation: C++ & DSA</span>
                             </div>
-                            <span className="text-[10px] bg-cyan-500/20 border border-cyan-400/40 px-2 py-0.5 rounded text-cyan-300">Completed</span>
+                            <span className="text-[10px] shrink-0 bg-cyan-500/20 border border-cyan-400/40 px-2 py-0.5 rounded text-cyan-300">Completed</span>
                           </div>
 
-                          <div className="p-3 rounded-lg border border-cyan-400 bg-cyan-950/40 flex items-center justify-between text-white shadow-[0_0_15px_rgba(0,229,255,0.15)]">
+                          <div className="p-3 rounded-lg border border-cyan-400 bg-cyan-950/40 flex items-center justify-between gap-2 text-white shadow-[0_0_15px_rgba(0,229,255,0.15)]">
                             <div className="flex items-center gap-2">
                               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                               <span className="font-semibold">Web: React, Next.js, TypeScript</span>
                             </div>
-                            <span className="text-[10px] bg-cyan-400 text-[#020408] font-bold px-2 py-0.5 rounded">Active Focus</span>
+                            <span className="text-[10px] shrink-0 bg-cyan-400 text-[#020408] font-bold px-2 py-0.5 rounded">Active Focus</span>
                           </div>
 
-                          <div className="p-3 rounded-lg border border-white/10 bg-white/5 flex items-center justify-between text-gray-400">
+                          <div className="p-3 rounded-lg border border-white/10 bg-white/5 flex items-center justify-between gap-2 text-gray-400">
                             <div className="flex items-center gap-2">
                               <span className="text-gray-600">○</span>
                               <span>Backend: Node.js, PostgreSQL, Prisma</span>
                             </div>
-                            <span className="text-[10px] text-gray-500">Upcoming</span>
+                            <span className="text-[10px] shrink-0 text-gray-500">Upcoming</span>
                           </div>
 
-                          <div className="p-3 rounded-lg border border-white/10 bg-white/5 flex items-center justify-between text-gray-400">
+                          <div className="p-3 rounded-lg border border-white/10 bg-white/5 flex items-center justify-between gap-2 text-gray-400">
                             <div className="flex items-center gap-2">
                               <span className="text-gray-600">○</span>
                               <span>AI Layer: LLM Integrations & Vector DBs</span>
                             </div>
-                            <span className="text-[10px] text-gray-500">Upcoming</span>
+                            <span className="text-[10px] shrink-0 text-gray-500">Upcoming</span>
                           </div>
                         </div>
                       </motion.div>
@@ -828,7 +827,7 @@ const RoadmapJourney = () => {
                         className="space-y-4"
                       >
                         <div className="p-4 rounded-xl border border-white/15 bg-[#020408] font-mono text-xs">
-                          <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+                          <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10 mb-3">
                             <span className="text-gray-300 font-semibold">PROJECT: Student Platform</span>
                             <span className="text-cyan-400 animate-pulse">[ BUILDING... ]</span>
                           </div>
@@ -853,7 +852,7 @@ const RoadmapJourney = () => {
                           </div>
                         </div>
 
-                        <div className="p-3 rounded-lg border border-cyan-500/30 bg-cyan-950/20 text-xs font-mono text-cyan-300 flex items-center justify-between">
+                        <div className="p-3 rounded-lg border border-cyan-500/30 bg-cyan-950/20 text-xs font-mono text-cyan-300 flex flex-wrap items-center justify-between gap-2">
                           <span>CODE COMMIT STATUS</span>
                           <span className="font-semibold">git push origin main ✓</span>
                         </div>
@@ -897,7 +896,7 @@ const RoadmapJourney = () => {
                           </div>
                         </div>
 
-                        <div className="p-3 rounded-lg border border-purple-500/30 bg-purple-950/20 text-xs font-mono text-purple-300 flex items-center justify-between">
+                        <div className="p-3 rounded-lg border border-purple-500/30 bg-purple-950/20 text-xs font-mono text-purple-300 flex flex-wrap items-center justify-between gap-2">
                           <span>NEXT BENCHMARK</span>
                           <span className="font-semibold">Mock Technical Interview →</span>
                         </div>
@@ -949,7 +948,7 @@ const RoadmapJourney = () => {
                 </div>
 
                 {/* Footer Stage Progress Indicators */}
-                <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-gray-400">
+                <div className="relative z-10 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-gray-400">
                   <span>CAREER JOURNEY SIMULATOR</span>
                   <div className="flex items-center gap-1.5">
                     {JOURNEY_STEPS.map((_, i) => (
@@ -982,13 +981,13 @@ const RoadmapJourney = () => {
 // ==========================================
 const FeatureBento = () => {
   return (
-    <section className="py-28 bg-[#020408] border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-semibold text-gray-100 tracking-tight mb-16 text-center">Everything you need to move forward.</h2>
+    <section className="py-16 sm:py-24 md:py-28 bg-[#020408] border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-100 tracking-tight mb-10 sm:mb-16 text-center">Everything you need to move forward.</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {/* Feature 1 */}
-          <div className="md:col-span-2 border border-white/10 bg-[#03050a] p-8 rounded-xl flex flex-col justify-between hover:border-cyan-500/40 transition-all relative overflow-hidden group">
+          <div className="md:col-span-2 border border-white/10 bg-[#03050a] p-6 sm:p-8 rounded-xl flex flex-col justify-between hover:border-cyan-500/40 transition-all relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 blur-3xl rounded-full"></div>
             <div>
               <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider">Core System</span>
@@ -999,7 +998,7 @@ const FeatureBento = () => {
           </div>
           
           {/* Feature 2 */}
-          <div className="border border-white/10 bg-[#03050a] p-8 rounded-xl flex flex-col justify-between hover:border-purple-500/40 transition-all">
+          <div className="border border-white/10 bg-[#03050a] p-6 sm:p-8 rounded-xl flex flex-col justify-between hover:border-purple-500/40 transition-all">
             <div>
               <span className="text-xs font-mono text-purple-400 uppercase tracking-wider">Context-Aware</span>
               <h3 className="text-xl font-semibold text-gray-100 mt-2 mb-2">AI Mentor</h3>
@@ -1009,7 +1008,7 @@ const FeatureBento = () => {
           </div>
 
           {/* Feature 3 */}
-          <div className="border border-white/10 bg-[#03050a] p-8 rounded-xl flex flex-col justify-between hover:border-emerald-500/40 transition-all">
+          <div className="border border-white/10 bg-[#03050a] p-6 sm:p-8 rounded-xl flex flex-col justify-between hover:border-emerald-500/40 transition-all">
             <div>
               <span className="text-xs font-mono text-emerald-400 uppercase tracking-wider">Hands-On Practice</span>
               <h3 className="text-xl font-semibold text-gray-100 mt-2 mb-2">Dev Arena</h3>
@@ -1019,7 +1018,7 @@ const FeatureBento = () => {
           </div>
 
           {/* Feature 4 */}
-          <div className="md:col-span-2 border border-white/10 bg-[#03050a] p-8 rounded-xl flex flex-col justify-between hover:border-amber-500/40 transition-all">
+          <div className="md:col-span-2 border border-white/10 bg-[#03050a] p-6 sm:p-8 rounded-xl flex flex-col justify-between hover:border-amber-500/40 transition-all">
             <div>
               <span className="text-xs font-mono text-amber-400 uppercase tracking-wider">Career Prep</span>
               <h3 className="text-xl font-semibold text-gray-100 mt-2 mb-2">Placement Tracker</h3>
@@ -1038,12 +1037,12 @@ const FeatureBento = () => {
 // ==========================================
 const FinalCTA = () => {
   return (
-    <section className="py-36 bg-[#03050a] relative overflow-hidden border-t border-white/5 pb-28">
+    <section className="pt-20 pb-28 sm:pt-28 md:pt-36 bg-[#03050a] relative overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(0,229,255,0.08)_0%,transparent_60%)]"></div>
-      <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
-        <h2 className="text-4xl md:text-5xl font-semibold text-gray-100 tracking-tight mb-6">Stop guessing what to learn next.</h2>
-        <p className="text-xl text-gray-300 font-light mb-10">Build a roadmap that turns your goals into clear, actionable execution.</p>
-        <Link href="/generate" className="inline-block px-10 py-5 bg-cyan-400/15 text-cyan-300 border border-cyan-400/40 hover:bg-cyan-400/25 transition-all text-sm font-semibold tracking-wide uppercase shadow-[0_0_25px_rgba(0,229,255,0.15)]">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-100 tracking-tight mb-6">Stop guessing what to learn next.</h2>
+        <p className="text-lg sm:text-xl text-gray-300 font-light mb-8 sm:mb-10">Build a roadmap that turns your goals into clear, actionable execution.</p>
+        <Link href="/generate" className="inline-block px-6 sm:px-10 py-4 sm:py-5 bg-cyan-400/15 text-cyan-300 border border-cyan-400/40 hover:bg-cyan-400/25 transition-all text-sm font-semibold tracking-wide uppercase shadow-[0_0_25px_rgba(0,229,255,0.15)]">
           Build My Roadmap →
         </Link>
       </div>
@@ -1056,8 +1055,7 @@ const FinalCTA = () => {
 // ==========================================
 export default function HomePage() {
   return (
-    <div suppressHydrationWarning className="bg-[#03050a] text-gray-200 font-sans selection:bg-cyan-500/30">
-      <Navbar />
+    <div suppressHydrationWarning className="overflow-x-clip bg-[#03050a] text-gray-200 font-sans selection:bg-cyan-500/30">
       <main>
         <HeroSection />
         <ProblemSection />
