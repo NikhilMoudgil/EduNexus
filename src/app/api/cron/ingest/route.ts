@@ -8,6 +8,7 @@ import {
   ADZUNA_QUERIES,
   ADZUNA_PAGES,
 } from "@/lib/ingest/config";
+import { cleanupOpportunities } from "@/lib/ingest/cleanup";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -248,10 +249,20 @@ export async function GET(req: Request) {
     data: { isActive: false },
   });
 
+  // Delete old, untracked listings so the table doesn't grow forever.
+  // Wrapped so a cleanup failure never breaks the ingest itself.
+  let deletedOld = 0;
+  try {
+    deletedOld = await cleanupOpportunities();
+  } catch (e) {
+    console.error("Opportunity cleanup failed", e);
+  }
+
   return NextResponse.json({
     ok: true,
     ranAt: new Date().toISOString(),
     expiredByDeadline: expired.count,
+    deletedOld,
     results,
   });
 }
