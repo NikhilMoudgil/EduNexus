@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         "X-Title": "EduNexus Multi-Domain Tutor",
       },
       body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo", 
+        model: "openrouter/free", 
         messages: [
           {
             role: "system",
